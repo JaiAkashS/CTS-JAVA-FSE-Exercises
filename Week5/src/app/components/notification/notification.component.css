@@ -1,0 +1,68 @@
+.notification-banner {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 1050;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 320px;
+  max-width: 450px;
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(10px);
+  animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.notif-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.notif-icon {
+  font-size: 1.1rem;
+}
+
+.notif-message {
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.btn-close {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  font-size: 0.95rem;
+  padding: 0.25rem;
+  margin-left: 1rem;
+  transition: color 0.2s;
+}
+
+.btn-close:hover {
+  color: #fff;
+}
+
+/* Color schemes */
+.notif-success {
+  background: rgba(46, 204, 113, 0.15);
+  border: 1px solid rgba(46, 204, 113, 0.3);
+}
+
+.notif-error {
+  background: rgba(231, 76, 60, 0.15);
+  border: 1px solid rgba(231, 76, 60, 0.3);
+}
+
+.notif-info {
+  background: rgba(52, 152, 219, 0.15);
+  border: 1px solid rgba(52, 152, 219, 0.3);
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

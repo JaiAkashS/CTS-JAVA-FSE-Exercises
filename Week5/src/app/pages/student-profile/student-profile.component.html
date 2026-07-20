@@ -1,0 +1,48 @@
+<div class="profile-container animate-fade-in">
+  <div class="profile-card glass-panel">
+    <div class="profile-header">
+      <div class="avatar">JD</div>
+      <div class="header-details">
+        <h2>{{ student.name }}</h2>
+        <p class="major">{{ student.major }}</p>
+      </div>
+    </div>
+
+    <div class="profile-body">
+      <div class="info-row">
+        <span class="info-label">Student ID</span>
+        <span class="info-value"><code>{{ student.id }}</code></span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Email Address</span>
+        <span class="info-value">{{ student.email }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Academic GPA</span>
+        <span class="info-value gpa-highlight">{{ student.gpa | number:'1.1-2' }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Enrollment Term</span>
+        <span class="info-value">{{ student.enrolledDate }}</span>
+      </div>
+    </div>
+
+    <!-- Enrolled Courses Section -->
+    <div class="profile-enrolled-courses">
+      <h3>Enrolled Courses</h3>
+      <div *ngIf="enrolledCourses.length > 0; else noEnrolled" class="enrolled-list">
+        <div *ngFor="let course of enrolledCourses" class="enrolled-item">
+          <div class="enrolled-item-details">
+            <span class="enrolled-code">{{ course.code }}</span>
+            <span class="enrolled-name">{{ course.name }}</span>
+          </div>
+          <span class="enrolled-credits">{{ course.credits }} Credits</span>
+        </div>
+      </div>
+      <ng-template #noEnrolled>
+        <p class="no-enrolled-msg">You are not enrolled in any courses yet.</p>
+      </ng-template>
+    </div>
+  </div>
+</div>
+

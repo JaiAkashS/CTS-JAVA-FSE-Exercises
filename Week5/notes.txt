@@ -1,0 +1,133 @@
+==============================================================================
+DIGITAL NURTURE 5.0 - ANGULAR WEEK 5 EXERCISE NOTES
+Student Course Portal
+==============================================================================
+
+FILE EXPLANATIONS
+-----------------
+1. angular.json
+   - The primary CLI configuration file. Specifies project root, output paths,
+     build/serve/test targets, asset globs, and bundle budget thresholds.
+   - The 'budgets' section (maximumWarning/maximumError) controls how large the
+     generated JS bundles can be before Angular CLI emits a build warning or error.
+
+2. tsconfig.json
+   - Root TypeScript compiler configuration. Sets strict mode, target ES version,
+     module format, and path mappings. Enables strict property initialization checks.
+
+3. tsconfig.app.json
+   - Extends tsconfig.json; used exclusively for the application build (not tests).
+
+4. tsconfig.spec.json
+   - Extends tsconfig.json; used for Karma/Jasmine unit tests.
+
+5. src/main.ts
+   - Application bootstrap entry point. Calls bootstrapApplication() with AppComponent
+     and appConfig (providers: router, HttpClient, NgRx store, effects).
+
+6. src/app/app.config.ts
+   - Provides all root-level Angular DI tokens: router, HttpClient + interceptors,
+     NgRx provideStore, provideEffects, provideStoreDevtools.
+
+7. src/app/app.routes.ts
+   - Declares the route table. Uses child routes for /courses/:id, authGuard on
+     /profile, canDeactivate (unsavedChangesGuard) on /enroll-reactive, and a
+     wildcard 404 route.
+
+==============================================================================
+ANGULAR BUDGET CONFIGURATION
+==============================================================================
+
+In angular.json under projects > student-course-portal > architect > build >
+configurations > production > budgets:
+
+  maximumWarning : triggers a WARNING when the bundle size exceeds this value.
+                   The build still succeeds. Example: "500kB"
+
+  maximumError   : triggers an ERROR and FAILS the build when the bundle size
+                   exceeds this value. Example: "1MB"
+
+These are guards to keep the application performant. When a budget is exceeded,
+the fix is usually: lazy-loading feature modules, removing unused imports,
+or enabling production optimisations (tree-shaking, minification).
+
+==============================================================================
+HANDS-ON SUMMARY
+==============================================================================
+
+HANDS-ON 1 & 2: Component Basics, Bindings, Lifecycle
+  - HomeComponent  : Interpolation ({{ }}) , property binding ([disabled]),
+                     event binding ((click)), two-way binding ([(ngModel)]).
+  - StudentProfileComponent: ngOnInit, ngOnChanges, ngOnDestroy lifecycle hooks.
+  - CourseCardComponent: @Input, @Output, EventEmitter, ngOnChanges(SimpleChanges).
+
+HANDS-ON 3: Directives, Pipes, Structural Directives
+  - *ngFor, *ngIf, [ngClass], [ngStyle], [ngSwitch]/*ngSwitchCase in templates.
+  - HighlightDirective: Custom attribute directive using @HostListener on mouseenter/mouseleave.
+  - CreditLabelPipe: Custom pipe that transforms a number into 'N Credit(s)'.
+
+HANDS-ON 4: Template-Driven Forms
+  - EnrollmentFormComponent: Two-way binding with [(ngModel)], #ref variables,
+    template-driven validation, required/minlength/email validators.
+  - Validators accessed as #field="ngModel" and field.errors?.['required'].
+
+HANDS-On 5: Reactive Forms
+  - ReactiveEnrollmentFormComponent: FormBuilder, FormGroup, FormArray, FormControl.
+  - Custom sync validator: noCourseCodeValidator blocks 'XX' prefixed codes.
+  - Custom async validator: emailTakenValidator simulates 800ms API email check.
+  - Dynamic form array: addCourse() / removeCourse() for additional courses list.
+  - Implements HasUnsavedChanges interface for CanDeactivate guard.
+
+HANDS-ON 6: Services & Dependency Injection
+  - CourseService: providedIn 'root' singleton returning Observable<Course[]>.
+  - EnrollmentService: root singleton, injecting CourseService (service-to-service).
+  - NotificationService: NOT providedIn root; provided at component level — each
+    component providing it gets its own isolated instance (explained in code).
+  - LoadingService: root singleton tracking HTTP request count with BehaviorSubject.
+
+HANDS-ON 7: Routing & Navigation
+  - RouterLink, RouterOutlet, ActivatedRoute for param reading.
+  - Child routes: /courses => CourseListComponent; /courses/:id => CourseDetailComponent.
+  - Route guard (CanActivate): authGuard redirects unauthenticated users.
+  - Route guard (CanDeactivate): unsavedChangesGuard prompts on dirty forms.
+  - Wildcard route '**' maps to NotFoundComponent (404 page).
+
+HANDS-ON 8: HTTP Client & Interceptors
+  - HttpClient configured via provideHttpClient() + withInterceptors().
+  - authInterceptor: Attaches Bearer token to all requests.
+  - loadingInterceptor: Calls LoadingService.show()/hide() via inject().
+  - errorHandlerInterceptor: Catches HTTP errors and maps to user-friendly messages.
+  - db.json: Mock database used with json-server (run: npx json-server db.json).
+
+HANDS-ON 9: NgRx State Management
+  - provideStore({ course: courseReducer, enrollment: enrollmentReducer })
+  - provideEffects([CourseEffects])
+  - provideStoreDevtools() for Redux DevTools browser extension.
+  - Course Actions: loadCourses, loadCoursesSuccess, loadCoursesFailure.
+  - Enrollment Actions: enrollInCourse, unenrollFromCourse, setEnrolledCourses.
+  - Selectors: selectAllCourses, selectCoursesLoading, selectEnrolledIds,
+               selectEnrolledCourses (cross-slice composed selector).
+  - CourseEffects intercepts loadCourses and dispatches success/failure.
+
+HANDS-ON 10: Unit Testing
+  - CourseService.spec: Tests getCourses() Observable, getCoursesSnapshot(), addCourse().
+  - EnrollmentService.spec: Tests enroll/unenroll/getEnrolledCourses.
+  - courseReducer.spec: Tests all three reducer transitions.
+  - enrollmentReducer.spec: Tests enroll/unenroll/set actions and duplicate guard.
+  - CourseEffects.spec: Tests success and failure paths using provideMockActions.
+  - courseSelectors.spec: Tests projector functions for all three selectors.
+  - CreditLabelPipe.spec: Tests singular/plural credit label transform.
+  - CourseCardComponent.spec: Tests @Input rendering, @Output event emission,
+                              ngOnChanges, and grade badge rendering.
+  - CourseListComponent.spec: Tests store dispatch on init, trackBy, onEnroll.
+
+==============================================================================
+TO START THE APP (Development):
+  npm start                   (starts Angular dev server on http://localhost:4200)
+
+TO START THE MOCK API:
+  npx json-server db.json     (starts REST API on http://localhost:3000)
+
+TO RUN UNIT TESTS:
+  npm test
+==============================================================================

@@ -1,0 +1,15 @@
+<div 
+  *ngIf="currentNotification" 
+  class="notification-banner animate-slide-down" 
+  [ngClass]="'notif-' + currentNotification.type"
+>
+  <div class="notif-content">
+    <span class="notif-icon">
+      <span *ngIf="currentNotification.type === 'success'">✅</span>
+      <span *ngIf="currentNotification.type === 'error'">❌</span>
+      <span *ngIf="currentNotification.type === 'info'">ℹ️</span>
+    </span>
+    <span class="notif-message">{{ currentNotification.message }}</span>
+  </div>
+  <button class="btn-close" (click)="close()">✕</button>
+</div>

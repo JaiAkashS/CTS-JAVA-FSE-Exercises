@@ -1,0 +1,13 @@
+{
+  "courses": [
+    { "id": 1, "name": "Data Structures & Algorithms", "code": "CS101", "credits": 4, "gradeStatus": "passed" },
+    { "id": 2, "name": "Introduction to Database Systems", "code": "CS102", "credits": 3, "gradeStatus": "pending" },
+    { "id": 3, "name": "Object-Oriented Programming", "code": "CS103", "credits": 3, "gradeStatus": "passed" },
+    { "id": 4, "name": "Web Application Development", "code": "CS104", "credits": 4, "gradeStatus": "pending" },
+    { "id": 5, "name": "Software Engineering Principles", "code": "CS105", "credits": 3, "gradeStatus": "failed" }
+  ],
+  "enrollments": [
+    { "id": 1, "studentId": "S10293", "courseId": 1, "semester": "Odd", "date": "2024-09-01" },
+    { "id": 2, "studentId": "S10293", "courseId": 3, "semester": "Odd", "date": "2024-09-01" }
+  ]
+}

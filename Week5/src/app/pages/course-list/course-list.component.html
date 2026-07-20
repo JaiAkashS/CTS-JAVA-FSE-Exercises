@@ -1,0 +1,41 @@
+<div class="course-list-container">
+  <header class="list-header animate-fade-in">
+    <h2>Available Courses</h2>
+    <p>Browse the course catalog, view grading statuses, details, and enroll in your preferred courses.</p>
+  </header>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading$ | async" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading courses, please wait...</p>
+  </div>
+
+  <!-- Loaded State -->
+  <div *ngIf="!(isLoading$ | async)" class="list-content animate-fade-in">
+    <app-course-summary-widget style="display: block; margin-bottom: 2rem;"></app-course-summary-widget>
+
+    <div *ngIf="(courses$ | async)?.length; else noCourses" class="course-grid">
+      <app-course-card 
+        *ngFor="let course of (courses$ | async); trackBy: trackByCourseId" 
+        [course]="course"
+        (enrollRequested)="onEnroll($event)"
+      ></app-course-card>
+    </div>
+
+    <!-- Empty State Template -->
+    <ng-template #noCourses>
+      <div class="no-courses-panel glass-panel">
+        <span class="empty-icon">📂</span>
+        <h3>No Courses Available</h3>
+        <p>There are currently no courses registered in the portal.</p>
+      </div>
+    </ng-template>
+
+    <footer class="selection-footer" *ngIf="selectedCourseId">
+      <div class="selection-banner animate-slide-in">
+        <span class="banner-icon">🎯</span>
+        <p>Selected course ID: <strong>{{ selectedCourseId }}</strong></p>
+      </div>
+    </footer>
+  </div>
+</div>

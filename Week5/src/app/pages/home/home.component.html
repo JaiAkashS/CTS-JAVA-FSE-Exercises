@@ -1,0 +1,58 @@
+<div class="home-container">
+  <header class="home-header animate-fade-in">
+    <h1>{{ portalName }}</h1>
+    <p class="subtitle">Empowering students to achieve academic excellence through structured learning pathways.</p>
+  </header>
+
+  <section class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-icon">📚</span>
+      <div class="stat-details">
+        <span class="stat-value">{{ coursesCount }}</span>
+        <span class="stat-label">Courses Available</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-icon">✅</span>
+      <div class="stat-details">
+        <span class="stat-value">{{ enrolledCount }}</span>
+        <span class="stat-label">Enrolled Courses</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-icon">⭐</span>
+      <div class="stat-details">
+        <span class="stat-value">{{ gpa | number:'1.1-2' }}</span>
+        <span class="stat-label">Current GPA</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="interactive-section glass-panel">
+    <h3>Enrollment Portal Control</h3>
+    <p>Check course availability and enroll instantly below.</p>
+    
+    <div class="enroll-action">
+      <button class="btn btn-primary" [disabled]="!isPortalActive" (click)="onEnrollClick()">
+        Enroll Now
+      </button>
+      <div *ngIf="message" class="alert alert-success animate-slide-in">
+        {{ message }}
+      </div>
+    </div>
+
+    <div class="search-box">
+      <label for="search-input">Search for courses:</label>
+      <input 
+        id="search-input"
+        type="text" 
+        [(ngModel)]="searchTerm" 
+        placeholder="Enter course name or code..."
+        class="form-control"
+      >
+      <p class="search-preview" *ngIf="searchTerm">
+        🔍 Searching for: <strong>{{ searchTerm }}</strong>
+      </p>
+    </div>
+  </section>
+</div>

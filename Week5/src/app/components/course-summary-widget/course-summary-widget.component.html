@@ -1,0 +1,24 @@
+<div class="summary-widget glass-panel">
+  <h4>Portal Summary Widget</h4>
+  <ng-container *ngIf="stats$ | async as stats">
+    <div class="widget-body">
+      <div class="widget-stat">
+        <span class="label">Total Courses Available:</span>
+        <span class="value">{{ stats.totalCourses }}</span>
+      </div>
+      <div class="widget-stat">
+        <span class="label">Total Credits Offered:</span>
+        <span class="value">{{ stats.totalCredits }}</span>
+      </div>
+      <div class="widget-stat">
+        <span class="label">My Enrolled Courses:</span>
+        <span class="value">{{ stats.enrolledCount }}</span>
+      </div>
+    </div>
+    <div class="widget-actions">
+      <button class="btn btn-secondary btn-sm btn-widget" (click)="addNewDemoCourse()">
+        🔄 Refresh Courses (via Store)
+      </button>
+    </div>
+  </ng-container>
+</div>

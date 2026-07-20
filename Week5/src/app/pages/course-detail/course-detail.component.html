@@ -1,0 +1,41 @@
+<div class="detail-container animate-fade-in">
+  <a routerLink="/courses" class="back-link">← Back to Courses</a>
+
+  <div *ngIf="course; else notFound" class="detail-card glass-panel">
+    <div class="detail-header">
+      <div class="course-badge">{{ course.code }}</div>
+      <h1>{{ course.name }}</h1>
+      <div class="grade-status" [ngClass]="{
+        'grade-passed': course.gradeStatus === 'passed',
+        'grade-failed': course.gradeStatus === 'failed',
+        'grade-pending': course.gradeStatus === 'pending'
+      }">
+        {{ course.gradeStatus | titlecase }}
+      </div>
+    </div>
+
+    <div class="detail-body">
+      <div class="info-row">
+        <span class="label">Course ID</span>
+        <span class="value">{{ course.id }}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">Credits</span>
+        <span class="value">{{ course.credits | creditLabel }}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">Grade Status</span>
+        <span class="value">{{ course.gradeStatus | titlecase }}</span>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #notFound>
+    <div class="not-found-card glass-panel">
+      <span class="not-found-icon">🔍</span>
+      <h2>Course Not Found</h2>
+      <p>No course found with ID: <strong>{{ courseId }}</strong></p>
+      <a routerLink="/courses" class="btn btn-primary">View All Courses</a>
+    </div>
+  </ng-template>
+</div>

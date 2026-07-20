@@ -1,0 +1,122 @@
+<div class="form-container animate-fade-in">
+  <div class="form-card glass-panel">
+    <h2>Course Enrollment Request</h2>
+    <p class="subtitle">Complete the template-driven form below to request enrollment in a course.</p>
+
+    <!-- Success Message -->
+    <div *ngIf="submitted" class="alert alert-success animate-slide-in">
+      🎉 Enrollment request submitted successfully!
+    </div>
+
+    <form #enrollForm="ngForm" (ngSubmit)="onSubmit(enrollForm)" novalidate>
+      <!-- Student Name -->
+      <div class="form-group">
+        <label for="studentName">Full Name</label>
+        <input 
+          type="text" 
+          id="studentName" 
+          name="studentName" 
+          [(ngModel)]="studentName" 
+          #nameCtrl="ngModel"
+          required 
+          minlength="3"
+          class="form-control"
+          placeholder="Enter your full name"
+        >
+        <div class="error-msg" *ngIf="nameCtrl.touched && nameCtrl.errors">
+          <span *ngIf="nameCtrl.errors?.['required']">Name is required.</span>
+          <span *ngIf="nameCtrl.errors?.['minlength']">Name must be at least 3 characters.</span>
+        </div>
+      </div>
+
+      <!-- Student Email -->
+      <div class="form-group">
+        <label for="studentEmail">Email Address</label>
+        <input 
+          type="email" 
+          id="studentEmail" 
+          name="studentEmail" 
+          [(ngModel)]="studentEmail" 
+          #emailCtrl="ngModel"
+          required 
+          email
+          class="form-control"
+          placeholder="your.email@university.edu"
+        >
+        <div class="error-msg" *ngIf="emailCtrl.touched && emailCtrl.errors">
+          <span *ngIf="emailCtrl.errors?.['required']">Email is required.</span>
+          <span *ngIf="emailCtrl.errors?.['email']">Please enter a valid email address.</span>
+        </div>
+      </div>
+
+      <!-- Course ID -->
+      <div class="form-group">
+        <label for="courseId">Course ID</label>
+        <input 
+          type="number" 
+          id="courseId" 
+          name="courseId" 
+          [(ngModel)]="courseId" 
+          #courseCtrl="ngModel"
+          required
+          class="form-control"
+          placeholder="Enter course ID (e.g. 101)"
+        >
+        <div class="error-msg" *ngIf="courseCtrl.touched && courseCtrl.errors">
+          <span *ngIf="courseCtrl.errors?.['required']">Course ID is required.</span>
+        </div>
+      </div>
+
+      <!-- Preferred Semester -->
+      <div class="form-group">
+        <label for="preferredSemester">Preferred Semester</label>
+        <select 
+          id="preferredSemester" 
+          name="preferredSemester" 
+          [(ngModel)]="preferredSemester" 
+          required
+          class="form-control"
+        >
+          <option value="Odd">Odd Semester</option>
+          <option value="Even">Even Semester</option>
+        </select>
+      </div>
+
+      <!-- Agree to Terms -->
+      <div class="form-group checkbox-group">
+        <label class="checkbox-label">
+          <input 
+            type="checkbox" 
+            id="agreeToTerms" 
+            name="agreeToTerms" 
+            [(ngModel)]="agreeToTerms" 
+            #termsCtrl="ngModel"
+            required
+          >
+          I agree to the academic terms and enrollment policies.
+        </label>
+        <div class="error-msg" *ngIf="termsCtrl.touched && termsCtrl.errors">
+          <span *ngIf="termsCtrl.errors?.['required']">You must agree to the terms to proceed.</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="form-actions">
+        <button 
+          type="button" 
+          class="btn btn-secondary" 
+          (click)="enrollForm.resetForm(); submitted = false"
+        >
+          Reset
+        </button>
+        <button 
+          type="submit" 
+          class="btn btn-primary" 
+          [disabled]="enrollForm.invalid"
+        >
+          Submit Request
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
